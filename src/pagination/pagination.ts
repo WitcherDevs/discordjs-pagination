@@ -9,7 +9,8 @@ import {
    TextInputBuilder,
    TextInputStyle,
    ModalActionRowComponentBuilder,
-   ModalSubmitInteraction
+   ModalSubmitInteraction,
+   TextChannel
 } from "discord.js";
 import {ButtonTypes, ButtonStyles, ButtonsTypes, PaginationOptions} from "./pagination.i";
 
@@ -228,7 +229,7 @@ export const pagination = async (options: PaginationOptions) => {
                      if (err.code === 50027) {
                         console.log(`Webhook token has expired : ${client ? "trying to delete embed from it's id..." : "no client found in option, cannot delete embed"}`);
                         if (client) {
-                           client.channels.fetch(interaction.channelId).then(channel => {
+                           client.channels.fetch(interaction.channelId).then((channel: TextChannel) => {
                               channel.messages.delete(initialMessage.id);
                            }).then(() => {
                               console.log(`Message with ${initialMessage.id} id has been deleted successfully.`);
